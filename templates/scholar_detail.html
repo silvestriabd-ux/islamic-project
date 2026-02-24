@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ scholar.name }} | Islamic Scholars Archive{% endblock %}
+
+{% block meta_description %}
+{{ scholar.meta_description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+        {% if scholar.profile_image %}
+        <img src="{{ scholar.profile_image.url }}" class="img-fluid rounded shadow-sm mb-4">
+        {% endif %}
+    </div>
+
+    <div class="col-md-8">
+        <h1 class="mb-2">{{ scholar.name }}</h1>
+        <p class="text-muted mb-4">
+            {{ scholar.birth_year }} – {{ scholar.death_year }} | {{ scholar.madhhab }}
+        </p>
+    </div>
+</div>
+
+<hr class="my-4">
+
+<div class="biography-content mt-4">
+    {{ scholar.biography|linebreaks }}
+</div>
+
+{% endblock %}

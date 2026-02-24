@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Islamic Scholars Archive{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="text-center mb-5">
+    <h1 class="fw-bold">Islamic Scholars Archive</h1>
+    <p class="lead text-muted">
+        A structured and carefully reviewed archive of classical Islamic scholars.
+    </p>
+    <a href="/scholars/" class="btn btn-dark me-2">Browse Scholars</a>
+    <a href="/submit/" class="btn btn-outline-dark">Submit Biography</a>
+</div>
+
+<hr class="my-5">
+
+<!-- Featured Section -->
+<h3 class="mb-4">Recently Published</h3>
+
+<div class="row">
+    {% for scholar in featured_scholars %}
+    <div class="col-md-4 mb-4">
+        <div class="card scholar-card h-100 shadow-sm">
+            {% if scholar.profile_image %}
+            <img src="{{ scholar.profile_image.url }}" class="card-img-top">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'scholar_detail' scholar.slug %}" class="text-decoration-none text-dark">
+                        {{ scholar.name }}
+                    </a>
+                </h5>
+                <p class="card-text text-muted">
+                    {{ scholar.short_bio }}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <p class="text-muted">No scholars published yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

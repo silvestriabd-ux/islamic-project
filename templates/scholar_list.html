@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Scholars | Islamic Scholars Archive{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Scholars</h2>
+
+<div class="row">
+    {% for scholar in scholars %}
+    <div class="col-md-4 mb-4">
+        <div class="card scholar-card h-100 shadow-sm">
+            {% if scholar.profile_image %}
+            <img src="{{ scholar.profile_image.url }}" class="card-img-top">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'scholar_detail' scholar.slug %}" class="text-decoration-none text-dark">
+                        {{ scholar.name }}
+                    </a>
+                </h5>
+                <p class="card-text text-muted">
+                    {{ scholar.short_bio }}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

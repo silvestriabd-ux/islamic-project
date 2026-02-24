@@ -1,0 +1,22 @@
+# Virtual Environment
+env/
+venv/
+
+# Environment variables
+.env
+
+# SQLite database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Media files
+#media/
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
