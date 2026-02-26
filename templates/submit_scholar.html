@@ -1,7 +1,66 @@
-<h2>Submit Scholar Biography</h2>
+{% extends "base.html" %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit for Review</button>
-</form>
+{% block title %}Submit Scholar | Islamic Scholars Archive{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        {% if submitted %}
+
+            <div class="card shadow-sm p-5 text-center">
+                <h3 class="mb-3">Submission Received</h3>
+                <p class="text-muted">
+                    Thank you for contributing to the archive.
+                    Our team will review your submission before publishing.
+                </p>
+
+                <a href="{% url 'submit_scholar' %}" class="btn btn-outline-dark mt-3">
+                    Submit Another Scholar
+                </a>
+            </div>
+
+        {% else %}
+
+            <h2 class="mb-4">Submit Scholar Biography</h2>
+            <p class="text-muted mb-4">
+                All submissions are reviewed before publication.
+            </p>
+
+            <div class="card shadow-sm p-4">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ field.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-dark mt-2" id="submitBtn">
+                        Submit for Review
+                    </button>
+       
+                </form>
+            </div>
+
+        {% endif %}
+
+    </div>
+</div>
+<script>
+document.querySelector("form").addEventListener("submit", function() {
+    document.getElementById("submitBtn").innerText = "Submitting...";
+});
+</script>
+{% endblock %}

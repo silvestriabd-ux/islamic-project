@@ -2,21 +2,39 @@ from django.shortcuts import get_object_or_404
 from .models import Scholar
 from django.shortcuts import render, redirect
 from .forms import ScholarSubmissionForm
+from django.contrib import messages
 # Create your views here.
 
 
+from django.contrib import messages
+
+
 def submit_scholar(request):
+    submitted = False
+
     if request.method == 'POST':
-        form = ScholarSubmissionForm(request.POST)
+        form = ScholarSubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             scholar = form.save(commit=False)
             scholar.status = 'draft'
             scholar.save()
-            return redirect('submission_success')
+
+            messages.success(
+                request,
+                "Thank you. Your submission is under review."
+            )
+
+            submitted = True
+            form = ScholarSubmissionForm()  # reset form
+
     else:
         form = ScholarSubmissionForm()
 
-    return render(request, 'submit_scholar.html', {'form': form})
+    return render(
+        request,
+        'submit_scholar.html',
+        {'form': form, 'submitted': submitted}
+    )
 
 
 def submission_success(request):
