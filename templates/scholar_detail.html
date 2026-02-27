@@ -18,7 +18,10 @@
     <div class="col-md-4">
         <h1 class="mb-2">{{ scholar.name }}</h1>
         <p class="text-muted mb-4">
-            {{ scholar.birth_year }} – {{ scholar.death_year }} | {{ scholar.madhhab }}
+            {{ scholar.birth_year }} – {{ scholar.death_year }} | {{ scholar.madhhab }} <br>
+            {% if scholar.author %}
+            Author : {{ scholar.author.username }}
+            {% endif %}
         </p>
     </div>
 </div>

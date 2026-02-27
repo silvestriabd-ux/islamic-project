@@ -3,6 +3,7 @@ from .models import Scholar
 from django.shortcuts import render, redirect
 from .forms import ScholarSubmissionForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -16,6 +17,7 @@ def submit_scholar(request):
         form = ScholarSubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             scholar = form.save(commit=False)
+            scholar.author = request.user
             scholar.status = 'draft'
             scholar.save()
 
@@ -63,3 +65,10 @@ def home(request):
     return render(request, 'home.html', {
         'featured_scholars': featured_scholars
     })
+
+
+@login_required
+def profile(request):
+    scholars = Scholar.objects.filter(
+        author=request.user).order_by('-created_at')
+    return render(request, "profile.html", {"scholars": scholars})
