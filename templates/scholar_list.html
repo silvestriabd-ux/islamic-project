@@ -22,6 +22,12 @@
                 <p class="card-text text-muted">
                     {{ scholar.short_bio }}
                 </p>
+                {% comment %} preview author name in scholars list {% endcomment %}
+                {% comment %} {% if scholar.author %}
+                    <p class="small text-muted mb-0">
+                        Author: {{ scholar.author.username }}
+                    </p>
+                {% endif %} {% endcomment %}
             </div>
         </div>
     </div>

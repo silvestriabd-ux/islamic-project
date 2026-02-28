@@ -8,4 +8,7 @@ urlpatterns = [
     path('scholars/<slug:slug>/', views.scholar_detail, name='scholar_detail'),
     path('', views.home, name='home'),
     path("profile/", views.profile, name="profile"),
+    path("author/<str:username>/", views.author_profile, name="author_profile"),
+    path("editor/review/", views.editor_review, name="editor_review"),
+    path("editor/publish/<int:pk>/", views.editor_publish, name="editor_publish"),
 ]

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Editor Review{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Draft Submissions</h2>
+
+{% for s in drafts %}
+  <div class="card p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <strong>{{ s.name }}</strong>
+        <div class="text-muted small">
+          by {% if s.author %}{{ s.author.username }}{% else %}Unknown{% endif %}
+        </div>
+      </div>
+
+      <form method="post" action="{% url 'editor_publish' s.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-dark btn-sm">Publish</button>
+      </form>
+    </div>
+  </div>
+{% empty %}
+  <p class="text-muted">No drafts to review.</p>
+{% endfor %}
+
+{% endblock %}
