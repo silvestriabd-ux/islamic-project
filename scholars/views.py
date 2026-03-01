@@ -21,12 +21,13 @@ from django.http import JsonResponse
 from django.contrib import messages
 
 
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+
 @login_required
-# def submit_scholar(request):
 def submit_scholar(request):
-    if not is_contributor(request.user):
-        raise PermissionDenied
-    # submitted = False
+    submitted = False
 
     if request.method == 'POST':
         form = ScholarSubmissionForm(request.POST, request.FILES)
@@ -37,21 +38,13 @@ def submit_scholar(request):
             scholar.save()
 
             messages.success(
-                request,
-                "Thank you. Your submission is under review."
-            )
-
+                request, "Thank you. Your submission is under review.")
             submitted = True
             form = ScholarSubmissionForm()  # reset form
-
     else:
         form = ScholarSubmissionForm()
 
-    return render(
-        request,
-        'submit_scholar.html',
-        {'form': form, 'submitted': submitted}
-    )
+    return render(request, 'submit_scholar.html', {'form': form, 'submitted': submitted})
 
 
 def submission_success(request):
@@ -188,6 +181,10 @@ def scholar_suggest(request):
         Q(username__icontains=q) |
         Q(first_name__icontains=q) |
         Q(last_name__icontains=q)
+    ).filter(
+        is_active=True,
+        is_staff=False,
+        is_superuser=False
     ).order_by("username")[:5]
 
     for u in users:

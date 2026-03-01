@@ -66,3 +66,8 @@
     color: #6b7280;
     margin-top: 3px;
 }
+
+/* Keyboard navigation highlight */
+.search-item.active {
+    background: #eef2ff;
+}
