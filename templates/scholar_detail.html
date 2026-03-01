@@ -20,7 +20,7 @@
         <p class="text-muted mb-4">
             {{ scholar.birth_year }} – {{ scholar.death_year }} | {{ scholar.madhhab }} <br>
             {% if scholar.author %}
-            Author : <a href="{% url 'author_profile' scholar.author.username %}"     class="text-decoration-none">{{ scholar.author.username }}</a>
+            Author : <a href="{% url 'author_profile' scholar.author.username %}"     class="text-decoration-none">{{ scholar.author.username|title }}</a>
             {% endif %}
         </p>
     </div>
